@@ -39,7 +39,7 @@ $contato = new Contato();
             <td><?php echo $item['foto']; ?></td>
             <td><?php echo $item['ativo']; ?></td>
             <td>
-                <button><a href="#">EDITAR</a></button>
+                <button><a href="editarContato.php?id_contatos=<?php echo $item['id_contatos'] ?>"> EDITAR</a></button>
                 <button><a href="#">| EXCLUIR</a></button>
             </td>
         </tr>

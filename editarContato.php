@@ -6,7 +6,7 @@ $contato = new Contato();
 if(!empty($_GET['id_contatos'])){
     $id = $_GET['id_contatos'];
     $info = $contato->buscar($id);
-    if(!empty($info['email'])){
+    if(empty($info['email'])){
         header("Location: /agendaSenac2025");
         exit;
     }

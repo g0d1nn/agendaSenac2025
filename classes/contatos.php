@@ -82,8 +82,8 @@ class Contato {
 
     public function buscar($id) {
         try{
-            $sql = $this->con->conectar()->prepare("SELECT * FROM contatos WHERE id_contatos = :id");
-            $sql->bindValue(' :id', $id);
+            $sql = $this->con->conectar()->prepare(" SELECT * FROM contatos WHERE id_contatos = :id ");
+            $sql->bindValue(':id', $id);
             $sql->execute();
             if($sql->rowCount() > 0) {
                 return $sql->fetch();
