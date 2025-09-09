@@ -21,7 +21,7 @@ class Contato {
     }
 
     private function existeEmail($email) {
-        $sql = $this->con->conectar()->prepare("SELECT id_contato FROM contatos WHERE email = :email");
+        $sql = $this->con->conectar()->prepare("SELECT id_contatos FROM contatos WHERE email = :email");
         $sql->bindParam(':email', $email, PDO::PARAM_STR);
         $sql->execute();
 
@@ -97,5 +97,35 @@ class Contato {
 
     }
 
+    public function editar($nome, $endereco, $email, $telefone, $redesocial, $profissao, $datanasc, $foto, $ativo, $id) {
+        $emailExistente = $this->existeEmail($email);
+        if (count($emailExistente) > 0 && $emailExistente['id_contatos'] != $id) {
+            return FALSE;
+        } else {
+            try {
+                $sql = $this->con->conectar()->prepare("UPDATE contatos SET nome = :nome, endereco = :endereco, email = :email, telefone = :telefone, redesocial = :redesocial, profissao = :profissao, datanasc = :datanasc, foto = :foto, ativo = :ativo WHERE id_contatos = :id");
+                $sql->bindValue(':nome', $nome);
+                $sql->bindValue(':endereco', $endereco);
+                $sql->bindValue(':email', $email);
+                $sql->bindValue(':telefone', $telefone);
+                $sql->bindValue(':redesocial', $redesocial);
+                $sql->bindValue(':profissao', $profissao);
+                $sql->bindValue(':datanasc', $datanasc);
+                $sql->bindValue(':foto', $foto);
+                $sql->bindValue(':ativo', $ativo);
+                $sql->bindValue(':id', $id);
+                $sql->execute();
+                return TRUE;
+            }catch(PDOException $ex) {
+                echo 'ERRO: ' . $ex->getMessage();
+            }
+        }
+    }
+
+    public function deletar($id) {
+        $sql = $this->con->conectar()->prepare("DELETE FROM contatos WHERE id_contatos = :id");
+        $sql->bindValue(':id', $id);
+        $sql->execute();
+    }
 
 }

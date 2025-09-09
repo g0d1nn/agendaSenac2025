@@ -25,7 +25,7 @@ if(!empty($_GET['id_contatos'])){
     Endereço: <br>
     <input type="text" name="endereco" value="<?php echo $info['endereco']; ?>" /> <br><br>
     Email: <br>
-    <input type="mail" name="email" value="<?php echo $info['email']; ?>" /> <br><br>
+    <input type="email" name="email" value="<?php echo $info['email']; ?>" /> <br><br>
     Telefone: <br>
     <input type="text" name="telefone" value="<?php echo $info['telefone']; ?>"/> <br><br>
     Rede Social: <br>
@@ -39,7 +39,7 @@ if(!empty($_GET['id_contatos'])){
     Ativo: <br>
     <input type="text" name="ativo" value="<?php echo $info['ativo']; ?>"/> <br><br>
 
-    <input type="submit" value="Adicionar Contato"/>
+    <input type="submit" value="Editar Contato"/>
 
 </form>
 
