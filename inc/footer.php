@@ -1,5 +1,5 @@
 <footer>
-    <h3>Final Agenda Senac 2025</h3>
+    <p>&copy; <?php echo date('Y') ?> - Desenvolvido por Pedro Godinho</p>
 </footer>
 </body>
 

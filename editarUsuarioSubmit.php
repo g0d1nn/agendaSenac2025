@@ -10,7 +10,14 @@ if(!empty ($_POST['id'])) {
     $id = $_POST['id'];
 
     if(!empty($email)) {
-    $usuario->editar($nome, $email, $senha, $permissoes, $id);
+        if(empty($senha)) {
+            $info = $usuario->buscar($id);
+            $senha = $info['senha'];
+        } else {
+            $senha = md5($senha);
+        }
+
+        $usuario->editar($nome, $email, $senha, $permissoes, $id);
     }
 
    header("Location: gestaoUsuario.php");
