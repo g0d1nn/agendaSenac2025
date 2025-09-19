@@ -75,7 +75,7 @@ header .header-logo h1 {
 footer {
     text-align: center;
     padding: 20px;
-    background: linear-gradient(90deg, #000000, #ff512f, #f09819);
+    background: linear-gradient(90deg, #000000, #ff8008);
     color: #fff;
     box-shadow: 0 -2px 6px rgba(0,0,0,0.2);
     margin-top: 40px; /* afasta do conteúdo */
@@ -119,11 +119,28 @@ a.btn:hover {
 table {
     width: 95%;
     margin: 20px auto;
-    border-collapse: collapse;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    border-collapse: separate;
+    border-spacing: 0;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     background: #fff;
 }
 
+/* Cabeçalho */
+table thead th {
+    background-color: #f09819;
+    color: #fff;
+    text-transform: uppercase;
+    padding: 12px;
+    font-size: 0.9rem;
+    text-align: center;
+}
+
+/* Linhas */
+tbody tr {
+    transition: background 0.3s ease;
+}
 
 tbody tr:nth-child(even) {
     background-color: #f9f9f9;
@@ -133,18 +150,29 @@ tbody tr:hover {
     background-color: #ffe5d1;
 }
 
+/* Células */
 td {
-    padding: 10px;
-    border-bottom: 1px solid #ddd;
+    padding: 12px;
+    border-bottom: 1px solid #eee;
+    text-align: center; /* ou left para textos longos */
 }
+
 
 td a {
     color: #005baa;
     text-decoration: none;
     font-weight: bold;
-    margin: 0 5px;
+    padding: 5px 8px;
+    border-radius: 4px;
+    transition: background 0.3s, color 0.3s;
 }
 
 td a:hover {
-    color: #ff512f;
+    background: #ff512f;
+    color: #fff;
+}
+
+/* Responsividade */
+.table-container {
+    overflow-x: auto;
 }
