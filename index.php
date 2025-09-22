@@ -37,9 +37,9 @@ $contato = new Contato();
                     <td><?php echo $item['telefone']; ?></td>
                     <td><?php echo $item['redesocial']; ?></td>
                     <td><?php echo $item['profissao']; ?></td>
-                    <td><?php echo $item['datanasc']; ?></td>
+                    <td><?php echo date('d/m/Y', strtotime($item['datanasc'])); ?></td>
                     <td><?php echo $item['foto']; ?></td>
-                    <td><?php echo $item['ativo']; ?></td>
+                    <td><?php echo ($item['ativo'] == 1) ? 'Sim' : 'Não'; ?></td>
                     <td>
                         <a href="editarContato.php?id_contatos=<?php echo $item['id_contatos'] ?>"> EDITAR</a>
                         <a href="#" onclick="avisoExcluirContato(<?php echo $item['id_contatos']; ?>)"> EXCLUIR</a>

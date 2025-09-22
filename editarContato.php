@@ -18,28 +18,57 @@ if(!empty($_GET['id_contatos'])){
 ?>
 <main>
     <h1>EDITAR CONTATO</h1>
-    <form method="POST" action="editarContatoSubmit.php">
+    <form method="POST" action="editarContatoSubmit.php" class="container mt-4 p-4 shadow rounded bg-white">
         <input type="hidden" name="id" value="<?php echo $info['id_contatos']; ?>">
-        Nome: <br>
-        <input type="text" name="nome" value="<?php echo $info['nome']; ?>" /> <br><br>
-        Endereço: <br>
-        <input type="text" name="endereco" value="<?php echo $info['endereco']; ?>" /> <br><br>
-        Email: <br>
-        <input type="email" name="email" value="<?php echo $info['email']; ?>" /> <br><br>
-        Telefone: <br>
-        <input type="text" name="telefone" value="<?php echo $info['telefone']; ?>"/> <br><br>
-        Rede Social: <br>
-        <input type="text" name="redesocial" value="<?php echo $info['redesocial']; ?>"/> <br><br>
-        Profissão: <br>
-        <input type="text" name="profissao" value="<?php echo $info['profissao']; ?>"/> <br><br>
-        Data de Nascimento: <br>
-        <input type="date" name="datanasc" value="<?php echo $info['datanasc']; ?>"/> <br><br>
-        Foto: <br>
-        <input type="text" name="foto" value="<?php echo $info['foto']; ?>"/> <br><br>
-        Ativo: <br>
-        <input type="text" name="ativo" value="<?php echo $info['ativo']; ?>"/> <br><br>
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label for="nome" class="form-label">Nome</label>
+                <input type="text" name="nome" class="form-control" value="<?php echo $info['nome']; ?>">
+            </div>
+            <div class="col-md-6 mb-3">
+                <label for="endereco" class="form-label">Endereço</label>
+                <input type="text" name="endereco" class="form-control" value="<?php echo $info['endereco']; ?>">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label for="email" class="form-label">E-mail</label>
+                <input type="email" name="email" class="form-control" value="<?php echo $info['email']; ?>">
+            </div>
+            <div class="col-md-6 mb-3">
+                <label for="telefone" class="form-label">Telefone</label>
+                <input type="tel" name="telefone" class="form-control" value="<?php echo $info['telefone']; ?>">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label for="redesocial" class="form-label">Rede Social</label>
+                <input type="text" name="redesocial" class="form-control" value="<?php echo $info['redesocial']; ?>">
+            </div>
+            <div class="col-md-6 mb-3">
+                <label for="profissao" class="form-label">Profissão</label>
+                <input type="text" name="profissao" class="form-control" value="<?php echo $info['profissao']; ?>">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4 mb-3">
+                <label for="datanasc" class="form-label">Data de Nascimento</label>
+                <input type="date" name="datanasc" class="form-control" value="<?php echo $info['datanasc']; ?>">
+            </div>
+            <div class="col-md-4 mb-3">
+                <label for="foto" class="form-label">Foto</label>
+                <input type="text" name="foto" class="form-control" value="<?php echo $info['foto']; ?>">
+            </div>
+            <div class="col-md-4 mb-3">
+                <label for="ativo" class="form-label">Ativo</label>
+                <select id="ativo" name="ativo" class="form-select">
+                    <option value="1" <?php echo ($info['ativo'] == 1 ? 'selected' : ''); ?>>Sim</option>
+                    <option value="0" <?php echo ($info['ativo'] == 0 ? 'selected' : ''); ?>>Não</option>
+                </select>
+            </div>
+        </div>
 
-        <input type="submit" value="Editar Contato"/>
+        <input type="submit" class="btn btn-primary" value="Editar Contato"/>
 
     </form>
 </main>

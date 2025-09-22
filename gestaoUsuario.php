@@ -5,7 +5,7 @@ $usuario = new Usuario();
 
 ?>
 <main>
-    <h1>Usuarios</h1>
+    <h1>Usuários</h1>
     <a href="adicionarUsuario.php" class="btn">ADICIONAR</a>
     <div class="table-container">
         <table>
@@ -14,7 +14,7 @@ $usuario = new Usuario();
                     <th>ID</th>
                     <th>NOME</th>
                     <th>EMAIL</th>
-                    <th>PERMISSOES</th>
+                    <th>PERMISSÕES</th>
                     <th>AÇÕES</th>
                 </tr>
             </thead>
