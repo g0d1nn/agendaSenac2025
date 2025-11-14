@@ -1,12 +1,27 @@
-<?php include 'inc/header.php'; 
+<?php
+session_start();
+include 'inc/header.php'; 
 include 'classes/contatos.php';
+include 'classes/usuarios.php';
 
+if(!isset($_SESSION['logado'])){
+    header("location: login.php");
+    exit;
+}
+$usuario = new Usuario();
+$usuario->setUsuario($_SESSION['logado']);
 $contato = new Contato();
 
+// print_r($_SESSION);
 ?>
 <main>
     <h1>Contatos</h1>
+    <?php if($usuario->temPermissao("ADD")): ?>
     <a href="adicionarContato.php" class="btn">ADICIONAR</a>
+    <?php endif; ?>
+    <?php if($usuario->temPermissao("SUPER")): ?>
+        <a href="gestaoUsuario.php">Usuários</a>
+    <?php endif; ?>
     <div class="table-container">
         <table>
             <thead>
@@ -25,7 +40,7 @@ $contato = new Contato();
                 </tr>
             </thead>
             <?php
-            $lista = $contato->listar();
+            $lista = $contato->getFoto();
             foreach($lista as $item):
             ?>
             <tbody>
@@ -38,11 +53,21 @@ $contato = new Contato();
                     <td><?php echo $item['redesocial']; ?></td>
                     <td><?php echo $item['profissao']; ?></td>
                     <td><?php echo date('d/m/Y', strtotime($item['datanasc'])); ?></td>
-                    <td><?php echo $item['foto']; ?></td>
+                    <td>
+                        <?php if(!empty($item['url'])): ?>
+                            <img src="img/contatos/<?php echo $item['url'];?>" height="50px" border="0">
+                        <?php else: ?>
+                                <img src="img/contatos/default.png" height="50px" border="0">
+                        <?php endif; ?>
+                    </td>
                     <td><?php echo ($item['ativo'] == 1) ? 'Sim' : 'Não'; ?></td>
                     <td>
+                        <?php if($usuario->temPermissao("EDIT")): ?>
                         <a href="editarContato.php?id_contatos=<?php echo $item['id_contatos'] ?>"> EDITAR</a>
+                        <?php endif; ?>
+                        <?php if($usuario->temPermissao("DEL")): ?>
                         <a href="#" onclick="avisoExcluirContato(<?php echo $item['id_contatos']; ?>)"> EXCLUIR</a>
+                        <?php endif; ?>
                     </td>
                 </tr>
             </tbody>

@@ -1,12 +1,26 @@
-<?php include 'inc/header.php'; 
+<?php
+session_start();
+include 'inc/header.php'; 
 include 'classes/usuarios.php';
 
-$usuario = new Usuario();
+if(!isset($_SESSION['logado'])){
+    header("location: login.php");
+    exit;
+}
 
+$usuario = new Usuario();
+$usuario->setUsuario($_SESSION['logado']);
+
+if(!$usuario->temPermissao("SUPER")) {
+    echo "<p>Você não tem permissão para acessar esta página.</p>";
+    exit;
+}
 ?>
 <main>
     <h1>Usuários</h1>
-    <a href="adicionarUsuario.php" class="btn">ADICIONAR</a>
+    <?php if($usuario->temPermissao("ADD")): ?>
+        <a href="adicionarUsuario.php" class="btn">ADICIONAR</a>
+    <?php endif; ?>
     <div class="table-container">
         <table>
             <thead>
@@ -29,8 +43,12 @@ $usuario = new Usuario();
                     <td><?php echo $item['email']; ?></td>
                     <td><?php echo $item['permissoes']; ?></td>
                     <td>
-                        <a href="editarUsuario.php?id_usuario=<?php echo $item['id_usuario'] ?>"> EDITAR</a>
-                        <a href="#" onclick="avisoExcluirUsuario(<?php echo $item['id_usuario']; ?>)"> EXCLUIR</a>
+                        <?php if($usuario->temPermissao("EDIT")): ?>
+                            <a href="editarUsuario.php?id_usuario=<?php echo $item['id_usuario'] ?>"> EDITAR</a>
+                        <?php endif; ?>
+                        <?php if($usuario->temPermissao("DEL")): ?>
+                            <a href="#" onclick="avisoExcluirUsuario(<?php echo $item['id_usuario']; ?>)"> EXCLUIR</a>
+                        <?php endif; ?>
                     </td>
                 </tr>
             </tbody>

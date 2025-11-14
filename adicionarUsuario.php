@@ -22,19 +22,19 @@
         <div class="mb-3">
             <label class="form-label d-block">Permissões</label>
             <div class="form-check form-check-inline">
-                <input class="form-check-input" type="checkbox" name="permissoes[]" value="add" id="add">
+                <input class="form-check-input" type="checkbox" name="permissoes[]" value="ADD" id="add">
                 <label class="form-check-label" for="add">Adicionar</label>
             </div>
             <div class="form-check form-check-inline">
-                <input class="form-check-input" type="checkbox" name="permissoes[]" value="edit" id="edit">
+                <input class="form-check-input" type="checkbox" name="permissoes[]" value="EDIT" id="edit">
                 <label class="form-check-label" for="edit">Editar</label>
             </div>
             <div class="form-check form-check-inline">
-                <input class="form-check-input" type="checkbox" name="permissoes[]" value="del" id="del">
+                <input class="form-check-input" type="checkbox" name="permissoes[]" value="DEL" id="del">
                 <label class="form-check-label" for="del">Deletar</label>
             </div>
             <div class="form-check form-check-inline">
-                <input class="form-check-input" type="checkbox" name="permissoes[]" value="super" id="super">
+                <input class="form-check-input" type="checkbox" name="permissoes[]" value="SUPER" id="super">
                 <label class="form-check-label" for="super">Super</label>
             </div>
         </div>

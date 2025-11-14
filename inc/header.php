@@ -9,6 +9,9 @@
     <link rel="stylesheet" type="text/css" href="css/style.css"> 
     <title>AgendaSenac2025</title>
 </head>
+<?php 
+
+?>
 <body>
     <header>
         <div class="header-logo">
@@ -20,8 +23,7 @@
         </div>
         <nav class="header-menu">
             <ul>
-                <li><a href="index.php">Contatos</a></li>
-                <li><a href="gestaoUsuario.php">Usuários</a></li>
+                <li><a href="sair.php">Sair</a></li>
             </ul>
         </nav>
     </header>

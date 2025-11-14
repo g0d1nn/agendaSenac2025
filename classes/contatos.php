@@ -80,6 +80,32 @@ class Contato {
 
     }
 
+// meu jeito de fazer
+     public function getFotoMeuJeito() {
+        try {
+        $sql = $this->con->conectar()->prepare("SELECT c.*, f.url FROM contatos c LEFT JOIN foto_contato f ON c.id_contatos = f.id_contatos");
+        $sql->execute();
+        return $sql->fetchALL();
+
+        }catch(PDOException $ex) {
+            echo 'ERRO: ' . $ex->getMessage();
+
+        }
+
+    }
+
+//professor
+     public function getFoto() {
+        $array = array();
+        $sql = $this->con->conectar()->prepare("SELECT *,(SELECT foto_contato.url FROM foto_contato WHERE foto_contato.id_contatos = id_contatos LIMIT 1) as url FROM contatos");
+        $sql->execute();
+        if($sql->rowCount() > 0) {
+            $array = $sql->fetchAll();
+        }
+        return $array;
+
+    }
+
     public function buscar($id) {
         try{
             $sql = $this->con->conectar()->prepare(" SELECT * FROM contatos WHERE id_contatos = :id ");
@@ -111,10 +137,43 @@ class Contato {
                 $sql->bindValue(':redesocial', $redesocial);
                 $sql->bindValue(':profissao', $profissao);
                 $sql->bindValue(':datanasc', $datanasc);
-                $sql->bindValue(':foto', $foto);
                 $sql->bindValue(':ativo', $ativo);
                 $sql->bindValue(':id', $id);
                 $sql->execute();
+                //inserir imagem
+                if(count($foto) > 0){
+                    for ($q=0; $q<count($foto['tmp_name']); $q++){
+                        $tipo = $foto['type'][$q];
+                        if(in_array($tipo, array('image/jpeg', 'image/png'))){
+                            $tmpname = md5(time().rand(0, 9999)).'.jpg';
+                            move_uploaded_file($foto['tmp_name'][$q], 'img/contatos/' . $tmpname);
+                            list($width_orig, $height_orig) = getimagesize('img/contatos/' . $tmpname);
+                            $ratio = $width_orig/$height_orig;
+                            $width = 500;
+                            $height= 500;
+                            if($width/$height > $ratio){
+                                $width = $height * $ratio;
+                            } else {
+                                $height = $width/$ratio;
+                            }
+                            $img = imagecreatetruecolor($width, $height);
+                            if($tipo === 'image/jpeg'){
+                                $origi = imagecreatefromjpeg('img/contatos/' .$tmpname);
+                            }elseif($tipo == 'image/png'){
+                                $origi = imagecreatefrompng('img/contatos/' .$tmpname);
+                            }
+                            imagecopyresampled($img, $origi, 0, 0, 0, 0, $width, $height, $width_orig, $height_orig);
+
+                            // salvar imagem servidor
+                            imagejpeg($img, 'img/contatos/' .$tmpname, 80);
+
+                            $sql = $this->con->conectar()->prepare("INSERT INTO foto_contato SET id_contatos = :id_contatos, url = :url");
+                            $sql->bindValue(":id_contatos", $id);
+                            $sql->bindValue(":url", $tmpname);
+                            $sql->execute();
+                        }
+                    }
+                }
                 return TRUE;
             }catch(PDOException $ex) {
                 echo 'ERRO: ' . $ex->getMessage();
@@ -126,6 +185,24 @@ class Contato {
         $sql = $this->con->conectar()->prepare("DELETE FROM contatos WHERE id_contatos = :id");
         $sql->bindValue(':id', $id);
         $sql->execute();
+    } 
+
+    public function getContato($id){
+        $array = array();
+        $sql = $this->con->conectar()->prepare("SELECT * FROM contatos WHERE id_contatos = :id");
+        $sql->bindValue(':id', $id);
+        $sql->execute();
+        if($sql->rowCount() > 0) {
+            $array = $sql->fetch();
+            $array['foto'] = array();
+            $sql = $this->con->conectar()->prepare("SELECT id, url FROM foto_contato WHERE id_contatos = :id_contatos");
+            $sql->bindValue(":id_contatos", $id);
+            $sql->execute();
+            if($sql->rowCount() > 0){
+                $array['foto'] = $sql->fetchAll();
+            }  
+        }
+        return $array;
     }
 
 }

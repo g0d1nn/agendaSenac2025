@@ -109,4 +109,42 @@ class Usuario {
         $sql->execute();
     }
 
+    //login
+
+    public function fazerLogin($email, $senha) {
+        $sql = $this->con->conectar()->prepare("SELECT * from usuarios WHERE email = :email AND senha = :senha");
+        $sql->bindValue(':email', $email);
+        $sql->bindValue(':senha', $senha);
+        $sql->execute();
+
+        if($sql->rowCount() > 0) {
+            $sql = $sql->fetch();
+            $_SESSION['logado'] = $sql['id_usuario'];
+            return TRUE;
+        }
+        return FALSE;
+    }
+
+    public function setUsuario($id) {
+        $this->id = $id;
+        $sql = $this->con->conectar()->prepare(" SELECT * FROM usuarios WHERE id_usuario = :id");
+        $sql->bindValue(':id', $this->id);
+        $sql->execute();
+
+        if($sql->rowCount()> 0) {
+            $sql = $sql->fetch();
+            $this->permissoes = explode(',', $sql['permissoes']);
+        }
+    }
+
+    public function temPermissao($p) {
+        if(in_array($p, $this->permissoes)) {
+            return TRUE;
+        }
+        return FALSE;
+    }
+
+    public function getPermissoes() {
+        return $this->permissoes;
+    }
 }

@@ -15,10 +15,40 @@ if(!empty($_GET['id_contatos'])){
     exit;
 }
 
+if(!empty ($_POST['id'])) {
+    $nome = $_POST['nome'];
+    $endereco = $_POST['endereco'];
+    $email = $_POST['email'];
+    $telefone = $_POST['telefone'];
+    $redesocial = $_POST['redesocial'];
+    $profissao = $_POST['profissao'];
+    $datanasc = $_POST['datanasc'];
+    if(isset($_FILES['foto'])){
+        $foto = $_FILES['foto'];
+    } else{
+        $foto = array();
+    }
+    $ativo = $_POST['ativo'];
+    $id = $_POST['id'];
+
+    if(!empty($email)) {
+    $contato->editar($nome, $endereco, $email, $telefone, $redesocial, $profissao, $datanasc, $foto, $ativo, $_GET['id']);
+    }
+
+    header("Location: /agendaSenac2025");
+}
+if(isset($_GET['id_contatos']) && !empty($_GET['id_contatos'])) {
+    $info = $contato->getContato($_GET['id_contatos']);
+}else{
+    ?>
+    <script type="text/javascript">window.location.href="index.php";</script>
+    <?php
+}
+
 ?>
 <main>
     <h1>EDITAR CONTATO</h1>
-    <form method="POST" action="editarContatoSubmit.php" class="container mt-4 p-4 shadow rounded bg-white">
+    <form method="POST" enctype="multipart/form-data" class="container mt-4 p-4 shadow rounded bg-white">
         <input type="hidden" name="id" value="<?php echo $info['id_contatos']; ?>">
         <div class="row">
             <div class="col-md-6 mb-3">
@@ -57,7 +87,18 @@ if(!empty($_GET['id_contatos'])){
             </div>
             <div class="col-md-4 mb-3">
                 <label for="foto" class="form-label">Foto</label>
-                <input type="text" name="foto" class="form-control" value="<?php echo $info['foto']; ?>">
+                <input type="file" name="foto[]" class="form-control" multiple />
+                <div class="grupo">
+                    <div class="cabecalho">Foto contato</div>
+                    <div class="corpo">
+                        <?php foreach($info['foto'] as $fotos): ?>
+                            <div class="foto_item">
+                                <img src="img/contatos/<?php echo $fotos['url']; ?>" alt="">
+                                <a href="excluir_foto.php?id=<?php $fotos['id']; ?>">Excluir</a>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
             </div>
             <div class="col-md-4 mb-3">
                 <label for="ativo" class="form-label">Ativo</label>
